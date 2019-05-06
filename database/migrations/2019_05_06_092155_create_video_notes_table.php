@@ -15,6 +15,9 @@ class CreateVideoNotesTable extends Migration
     {
         Schema::create('video_notes', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('video_id');
+            $table->text('content');
+            $table->string('timestamp');
             $table->timestamps();
         });
     }
