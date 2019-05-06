@@ -14,8 +14,8 @@ class CreateProjectsLinkedTagsTable extends Migration
     public function up()
     {
         Schema::create('projects_linked_tags', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            $table->integer('tag_id');
+            $table->integer('project_id');
         });
     }
 
