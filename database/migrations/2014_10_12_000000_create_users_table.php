@@ -19,8 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('lastaname');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('rank', 1);
-            $table->integer('company_id', 1);
+            $table->integer('rank');
+            $table->integer('company_id');
             $table->rememberToken();
             $table->timestamps();
         });
