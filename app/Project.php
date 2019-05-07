@@ -58,6 +58,16 @@ class Project extends Model
     }
 
     /** ----------------------------------------------------
+     * Tag
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tag()
+    {
+        return $this->belongsToMany('App\Tag');
+    }
+
+    /** ----------------------------------------------------
      * GetQueueableRelations
      * - Get the relationships for the entity.
      *
