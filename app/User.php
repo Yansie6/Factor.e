@@ -9,16 +9,21 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
+    /** ----------------------------------------------------
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password', 'rank', 'company_id',
+        'firstname',
+        'lastname',
+        'email',
+        'password',
+        'rank',
+        'company_id',
     ];
 
-    /**
+    /** ----------------------------------------------------
      * The attributes that should be hidden for arrays.
      *
      * @var array
@@ -26,4 +31,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /** ----------------------------------------------------
+     * GetQueueableRelations
+     * - Get the relationships for the entity.
+     *
+     */
+    public function getQueueableRelations()
+    {
+        // TODO: Implement getQueueableRelations() method.
+    }
 }
