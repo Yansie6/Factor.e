@@ -33,6 +33,15 @@ class User extends Authenticatable
     ];
 
     /** ----------------------------------------------------
+     * Projects
+     *
+     */
+    public function projects()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    /** ----------------------------------------------------
      * GetQueueableRelations
      * - Get the relationships for the entity.
      *

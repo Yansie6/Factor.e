@@ -18,21 +18,21 @@ class Project extends Model
     ];
 
     /** ----------------------------------------------------
-     * Note
+     * Notes
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function note()
+    public function notes()
     {
         return $this->hasMany('App\Note');
     }
 
     /** ----------------------------------------------------
-     * Video
+     * Videos
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function video()
+    public function videos()
     {
         return $this->hasMany('App\Video');
     }

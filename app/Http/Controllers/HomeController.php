@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
+    /** ----------------------------------------------------
+     * __Construct
+     * - Always execute this functions if this class is used
      *
      * @return void
      */
@@ -16,8 +17,9 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
+    /** ----------------------------------------------------
+     * Index
+     * - Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
