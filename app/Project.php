@@ -20,4 +20,9 @@ class Project extends Model
     {
         return $this->hasMany('App\Project_linked_tag');
     }
+
+    public function company()
+    {
+        return $this->belongsTo('App\Company');
+    }
 }
