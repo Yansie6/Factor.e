@@ -37,7 +37,6 @@ class Project extends Model
         return $this->hasMany('App\Video');
     }
 
-
     /** ----------------------------------------------------
      * Project_linked_tag
      *
@@ -46,6 +45,16 @@ class Project extends Model
     public function project_linked_tag()
     {
         return $this->hasMany('App\Project_linked_tag');
+    }
+
+    /** ----------------------------------------------------
+     * Company
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function company()
+    {
+        return $this->belongsTo('App\Company');
     }
 
     /** ----------------------------------------------------

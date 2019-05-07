@@ -17,6 +17,16 @@ class Tag extends Model
     ];
 
     /** ----------------------------------------------------
+     * Project_linked_tag
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function project_linked_tag()
+    {
+        return $this->hasMany('App\Project_linked_tag');
+    }
+
+    /** ----------------------------------------------------
      * GetQueueableRelations
      * - Get the relationships for the entity.
      *

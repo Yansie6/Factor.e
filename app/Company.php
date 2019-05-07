@@ -29,6 +29,11 @@ class Company extends Model
         return $this->hasMany('App\User');
     }
 
+    /** ----------------------------------------------------
+     * Project
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function project()
     {
         return $this->hasMany('App\Project');

@@ -20,11 +20,21 @@ class Project_linked_tag extends Model
     /** ----------------------------------------------------
      * Tag
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function project()
+    {
+        return $this->belongsTo('App\Project');
+    }
+
+    /** ----------------------------------------------------
+     * Tag
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function tag()
     {
-        return $this->hasMany('App\Tag');
+        return $this->belongsTo('App\Tag');
     }
 
     /** ----------------------------------------------------
