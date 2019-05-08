@@ -20,13 +20,13 @@ class Note extends Model
     ];
 
     /** ----------------------------------------------------
-     * Project
+     * Note belongs to a Project
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function project()
     {
-        return $this->belongsTo('App\Project');
+        return $this->belongsTo(Project::class);
     }
 
     /** ----------------------------------------------------

@@ -19,13 +19,13 @@ class Video_note extends Model
     ];
 
     /** ----------------------------------------------------
-     * Video
+     * Video_note belongs to a Video
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function video()
     {
-        return $this->belongsTo('App\Video');
+        return $this->belongsTo(Video::class);
     }
 
     /** ----------------------------------------------------

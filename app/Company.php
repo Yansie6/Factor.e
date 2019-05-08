@@ -20,23 +20,23 @@ class Company extends Model
     ];
 
     /** ----------------------------------------------------
-     * User
+     * Company has many Users
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function user()
+    public function users()
     {
-        return $this->hasMany('App\User');
+        return $this->hasMany(User::class);
     }
 
     /** ----------------------------------------------------
-     * Project
+     * Company has many Projects
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function project()
+    public function projects()
     {
-        return $this->hasMany('App\Project');
+        return $this->hasMany(Project::class);
     }
 
     /** ----------------------------------------------------

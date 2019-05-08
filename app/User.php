@@ -29,16 +29,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /** ----------------------------------------------------
-     * Projects
+     * User belongs to a Project
      *
      */
-    public function projects()
+    public function project()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
     }
 
     /** ----------------------------------------------------

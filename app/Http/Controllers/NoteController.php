@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Project;
+use App;
 
 class NoteController extends Controller
 {
@@ -13,13 +13,13 @@ class NoteController extends Controller
      *
      * @return view
      */
-    public function index() {
+    public function videoView() {
 
-        $notes = Project::find(1)->notes;
+//        $tags = App\Project::find(1)->Tags;
+        $projects = App\Tag::find(1)->Projects;
 
-        dd($notes);
+        dd($projects);
 
-        die();
         return view('welcome');
     }
 }

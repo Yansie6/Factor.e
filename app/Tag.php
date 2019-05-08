@@ -17,23 +17,13 @@ class Tag extends Model
     ];
 
     /** ----------------------------------------------------
-     * Project_linked_tag
+     * Many Tags belong to many Projects
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
-    public function project_linked_tag()
+    public function Projects()
     {
-        return $this->hasMany('App\Project_linked_tag');
-    }
-
-    /** ----------------------------------------------------
-     * Project
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function project()
-    {
-        return $this->belongsToMany('App\Project');
+        return $this->belongsToMany(Project::class, 'projects_linked_tags');
     }
 
     /** ----------------------------------------------------
