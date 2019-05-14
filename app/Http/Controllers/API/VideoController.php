@@ -32,6 +32,6 @@ class VideoController extends Controller
     }
 
     public function deleteVideo(Request $request) {
-
+        //TODO: finish this function
     }
 }
