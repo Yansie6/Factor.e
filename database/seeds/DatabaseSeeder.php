@@ -19,14 +19,12 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class
         ]);
 
-        $user = factory(App\User::class, 50)->make();
-        //$company = factory(App\Company::class, 50)->make();
+        factory(App\User::class, 10)->create();
 
-        /*factory(App\User::class, 50)->create()->each(function ($user) {
-            $user->posts()->save(factory(App\Post::class)->make());
-        });
-        factory(App\Company::class, 50)->create()->each(function ($company) {
-            $company->posts()->save(factory(App\Post::class)->make());
-        });*/
+
+        factory(App\Company::class, 10)->create();
+//        factory(App\Company::class, 50)->create()->each(function ($company) {
+//            $company->posts()->save(factory(App\Post::class)->make());
+//        });
     }
 }

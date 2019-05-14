@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('/get-all-videos', 'API\VideoController@addVideo');
 Route::post('/add-video', 'API\VideoController@addVideo');
 Route::post('/delete-video', 'API\VideoController@deleteVideo');
 

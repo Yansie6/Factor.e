@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App;
 
-class NoteController extends Controller
+class VideoNoteController extends Controller
 {
     /** ----------------------------------------------------
      * Index
