@@ -18,53 +18,44 @@ class Project extends Model
     ];
 
     /** ----------------------------------------------------
-     * Notes
+     * Project has many Notes
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function notes()
     {
-        return $this->hasMany('App\Note');
+        return $this->hasMany(Note::class);
     }
 
     /** ----------------------------------------------------
-     * Videos
+     * Project has many Videos
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function videos()
     {
-        return $this->hasMany('App\Video');
+        return $this->hasMany(Video::class);
     }
 
-    /** ----------------------------------------------------
-     * Project_linked_tag
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function project_linked_tag()
-    {
-        return $this->hasMany('App\Project_linked_tag');
-    }
 
     /** ----------------------------------------------------
-     * Company
+     * Project belongs to a Company
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function company()
     {
-        return $this->belongsTo('App\Company');
+        return $this->belongsTo(Company::class);
     }
 
     /** ----------------------------------------------------
-     * Tag
+     * Many Project belong to many Tags
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function tag()
+    public function tags()
     {
-        return $this->belongsToMany('App\Tag');
+        return $this->belongsToMany(Tag::class, 'projects_linked_tags');
     }
 
     /** ----------------------------------------------------

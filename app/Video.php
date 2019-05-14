@@ -20,17 +20,22 @@ class Video extends Model
     ];
 
     /** ----------------------------------------------------
-     * Video_note
+     * Video has many Video_notes
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function video_note()
+    public function video_notes()
     {
-        return $this->hasMany('App\Video_note'); 
+        return $this->hasMany(Video_note::class);
     }
+
+    /** ----------------------------------------------------
+     * Video belongs to a Project
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function project()
     {
-        return $this->belongsTo('App\Project');
+        return $this->belongsTo(Project::class);
     }
 
     /** ----------------------------------------------------
