@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 
         factory(App\User::class, 10)->create();
         factory(App\Video::class, 10)->create();
-        //factory(App\Video_note::class, 10)->create();
+        factory(App\Video_note::class, 10)->create();
         factory(App\Company::class, 10)->create();
 
     }
