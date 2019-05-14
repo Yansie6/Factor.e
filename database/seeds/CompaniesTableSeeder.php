@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class CompanySeeder extends Seeder
+class CompaniesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,7 +16,9 @@ class CompanySeeder extends Seeder
                 'name' => "NHL Stenden",
                 'address' => "Rengerslaan 10, 8917 DD, Leeuwarden",
                 'phone' => "+31 (0)88 991 7000",
-                'email' => "nhlstenden@example.com"
+                'email' => "nhlstenden@example.com",
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }
