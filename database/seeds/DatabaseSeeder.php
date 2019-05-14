@@ -20,11 +20,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         factory(App\User::class, 10)->create();
-
-
         factory(App\Company::class, 10)->create();
-//        factory(App\Company::class, 50)->create()->each(function ($company) {
-//            $company->posts()->save(factory(App\Post::class)->make());
-//        });
     }
 }
