@@ -22,10 +22,12 @@ class DatabaseSeeder extends Seeder
             CompaniesTableSeeder::class
         ]);
 
-        factory(App\User::class, 10)->create();
-        factory(App\Video::class, 10)->create();
-        factory(App\Video_note::class, 10)->create();
-        factory(App\Company::class, 10)->create();
+        $factor = 10;
+
+        factory(App\User::class, $factor)->create();
+        factory(App\Video::class, $factor)->create();
+        factory(App\Video_note::class, $factor * 5)->create();
+        factory(App\Company::class, $factor)->create();
 
     }
 }
