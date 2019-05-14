@@ -13,9 +13,9 @@ class Video_note extends Model
      * @var array
      */
     protected $fillable = [
-        'project_id',
-        'name',
-        'link',
+        'video_id',
+        'content',
+        'timestamp',
     ];
 
     /** ----------------------------------------------------
