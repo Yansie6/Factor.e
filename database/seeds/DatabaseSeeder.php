@@ -21,13 +21,12 @@ class DatabaseSeeder extends Seeder
             VideoNotesTableSeeder::class,
             CompaniesTableSeeder::class
         ]);
-
+        
         $factor = 10;
 
         factory(App\User::class, $factor)->create();
         factory(App\Video::class, $factor)->create();
         factory(App\Video_note::class, $factor * 5)->create();
         factory(App\Company::class, $factor)->create();
-
     }
 }

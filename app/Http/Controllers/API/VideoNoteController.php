@@ -15,6 +15,10 @@ class VideoNoteController extends Controller
         return $videoNotes;
     }
 
+    /** ----------------------------------------------------
+     * CreateVideoNote
+     * - Creates a note that is connected to a video
+     */
     public function createVideoNote(Request $request) {
 
         $validator = Validator::make($request->all(), [
@@ -39,6 +43,9 @@ class VideoNoteController extends Controller
         }
     }
 
+    /** ----------------------------------------------------
+     *
+     */
     public function updateVideoNote() {
         //TODO: finish updateNote() function
     }
