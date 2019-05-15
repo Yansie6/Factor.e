@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             VideoNotesTableSeeder::class,
             CompaniesTableSeeder::class
         ]);
-        
+
         $factor = 10;
 
         factory(App\User::class, $factor)->create();

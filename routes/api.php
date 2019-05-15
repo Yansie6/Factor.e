@@ -20,6 +20,7 @@ Route::delete('/delete-video/{id}', 'API\VideoController@deleteVideo');
 
 Route::post('/get-all-video-notes', 'API\VideoNoteController@getAllVideoNotes');
 Route::post('/create-video-note', 'API\VideoNoteController@createVideoNote');
+Route::patch('/update-video-note/{id}', 'API\VideoNoteController@updateVideoNote');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
