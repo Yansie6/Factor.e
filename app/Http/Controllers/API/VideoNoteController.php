@@ -16,7 +16,7 @@ class VideoNoteController extends Controller
     }
 
     /** ----------------------------------------------------
-     * CreateVideoNote
+     * createVideoNote
      * - Creates a note that is connected to a video
      *
      * @param Request $request
@@ -41,13 +41,14 @@ class VideoNoteController extends Controller
                 return http_response_code().": ID is missing.";
             } else {
                 http_response_code(400);
-                return http_response_code().': failed uploading data in database.';
+                return http_response_code().': Failed uploading data in database.';
             }
         }
     }
 
     /** ----------------------------------------------------
-     * UpdateVideoNote
+     * updateVideoNote
+     * - Updates videonote with the given id
      *
      * @param Request $request
      * @param $videonote_id
@@ -70,11 +71,31 @@ class VideoNoteController extends Controller
             $videonote->save();
 
             http_response_code(200);
-            return http_response_code().': updated row with id '.$videonote->id;
+            return http_response_code().': Updated row with id '.$videonote->id;
         }
     }
 
-    public function deleteVideoNote() {
-        //TODO: finish deleteNote() function
+    /** ----------------------------------------------------
+     * deleteVideoNote
+     *
+     * @param $videonote_id
+     * @return string
+     */
+    public function deleteVideoNote($videonote_id) {
+        if (intval($videonote_id) === 0) {
+            http_response_code(400);
+            return http_response_code() . ': Invalid argument; "' . $videonote_id . '" is not an integer';
+        } else {
+            $videonote = Video_note::find($videonote_id);
+
+            if (!empty($videonote)) {
+                $videonote->delete();
+                http_response_code(200);
+                return http_response_code() . ': Succesfully removed video with id ' . $videonote->id;
+            } else {
+                http_response_code(404);
+                return http_response_code() . ': Video with ID ' . $videonote_id . ' not found.';
+            };
+        }
     }
 }
