@@ -7,12 +7,29 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App;
 use App\Video_note;
+use PHPUnit\Util\Json;
 
 class VideoNoteController extends Controller
 {
-    public function getAllVideoNotes() {
-        $videonotes = Video_note::all();
-        return $videonotes;
+    /** ----------------------------------------------------
+     * GetAllVideosNotes
+     * - Gets all videos from the videos table
+     *
+     * @param $videoId
+     * @return String
+     */
+    public function getAllVideosNotes($videoId = false) {
+
+        if(!empty($videoId)){
+            $videoNotes = Video::where('video_id', $videoId)->get();
+        } else {
+            $videoNotes = Video::all();
+        }
+
+        return response()->json([
+            'message' => 'Success',
+            'data' => $videoNotes
+        ], 200);
     }
 
     /** ----------------------------------------------------

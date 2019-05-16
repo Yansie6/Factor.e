@@ -5,44 +5,43 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
-use App\Video;
+use App\Project;
 
-class VideoController extends Controller
+class ProjectController extends Controller
 {
     /** ----------------------------------------------------
-     * GetAllVideos
-     * - Gets all videos from the videos table
+     * GetAllProjects
+     * - Gets all projects from the projects table
      *
-     * @param $projectId
+     * @param $companyId
      * @return String
      */
-    public function getAllVideos($projectId = false) {
+    public function getAllProjects($companyId = false) {
 
-        if($projectId){
-            $videos = Video::where('project_id', $projectId)->get();
+        if(!empty($companyId)){
+            $projects = Project::where('company_id', $companyId)->get();
         } else {
-            $videos = Video::all();
+            $projects = Project::all();
         }
 
         return response()->json([
             'message' => 'Success',
-            'data' => $videos
+            'data' => $projects
         ], 200);
     }
 
     /** ----------------------------------------------------
-     * addVideo
-     * - Adds video to the videos table
+     * addProject
+     * - Adds project to the projects table
      *
      * @param Request $request
      * @return string
      */
-    public function addVideo(Request $request) {
+    public function addProject(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'project_id' => 'required|int',
-            'name' => 'required|string|max:255',
-            'link' => 'required|string|max:255'
+            'company_id' => 'required|int',
+            'name' => 'required|string|max:255'
         ]);
 
         if($validator->fails()) {
@@ -50,12 +49,12 @@ class VideoController extends Controller
                 'message' => 'Did not pass validator.'
             ], 400);
         } else {
-            $video = Video::create($request->all());
+            $project = Project::create($request->all());
 
-            if(!empty($video->id)) {
+            if(!empty($project->id)) {
                 return response()->json([
-                    'message' => 'Successfully added video note with id '.$video->id,
-                    'data' => $video
+                    'message' => 'Successfully added project note with id '.$project->id,
+                    'data' => $project
                 ], 201);
             } else {
                 return response()->json([
@@ -66,14 +65,14 @@ class VideoController extends Controller
     }
 
     /** ----------------------------------------------------
-     * UpdateVideo
-     * - updates video with the correct id in the videos table
+     * UpdateProject
+     * - updates project with the correct id in the projects table
      *
-     * @param Request $request
-     * @param $video_id
+     * @param $request
+     * @param $project_id
      * @return string
      */
-    public function updateVideo(Request $request, $video_id) {
+    public function updateProject(Request $request, $project_id) {
 
         $validator = Validator::make($request->all(), [
             'project_id' => 'required|int',
@@ -87,50 +86,51 @@ class VideoController extends Controller
             ], 400);
         } else {
 
-            if (intval($video_id) === 0) {
+            if (intval($project_id) === 0) {
                 return response()->json([
                     'message' => 'Invalid argument.'
                 ], 400);
             } else {
-                $video = Video::find($video_id);
+                $project = Project::find($project_id);
 
-                $video->project_id = $request->get('company_id');
-                $video->name = $request->get('name');
+                $project->project_id = $request->get('project_id');
+                $project->name = $request->get('name');
+                $project->link = $request->get('link');
 
-                $video->save();
+                $project->save();
 
                 return response()->json([
-                    'message' => 'Successfully updated video with id '.$video->id,
-                    'data' => $video
+                    'message' => 'Successfully updated project with id '.$project->id,
+                    'data' => $project
                 ], 201);
             }
         }
     }
 
     /** ----------------------------------------------------
-     * deleteVideo
-     * - deletes video with the given id
+     * deleteProject
+     * - deletes project with the given id
      *
-     * @param $video_id
+     * @param $project_id
      * @return string
      */
-    public function deleteVideo($video_id) {
-        if(intval($video_id) === 0) {
+    public function deleteProject($project_id) {
+        if(intval($project_id) === 0) {
             return response()->json([
                 'message' => 'Invalid argument.'
             ], 400);
         } else {
             //check if record exists
-            $video = Video::find($video_id);
+            $project = Project::find($project_id);
 
-            if(!empty($video)){
-                Video::find($video_id)->delete();
+            if(!empty($project)){
+                Project::find($project_id)->delete();
                 return response()->json([
-                    'message' => 'Succesfully removed video with id ' . $video->id
+                    'message' => 'Succesfully removed project with id ' . $project->id
                 ], 201);
             } else {
                 return response()->json([
-                    'message' => 'Video with ID ' . $video_id . ' not found.'
+                    'message' => 'Project with ID ' . $project_id . ' not found.'
                 ], 404);
             }
 
