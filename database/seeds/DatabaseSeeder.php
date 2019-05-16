@@ -31,10 +31,10 @@ class DatabaseSeeder extends Seeder
         factory(App\User::class, $factor)->create();
         factory(App\Video::class, $factor)->create();
         factory(App\Video_note::class, $factor * 5)->create();
-        //factory(App\Note::class, $factor)->create();
-        //factory(App\Tag::class, $factor)->create();
-        //factory(App\Project::class, $factor)->create();
-        //factory(App\ProjectTags::class, $factor)->create(); // Class doesn't exist!
+        factory(App\Note::class, $factor)->create();
+        factory(App\Tag::class, $factor)->create();
+        factory(App\Project::class, $factor)->create();
+        factory(App\Project_linked_tag::class, $factor * 5)->create();
         factory(App\Company::class, $factor)->create();
     }
 }
