@@ -31,17 +31,20 @@ class VideoNoteController extends Controller
         ]);
 
         if ($validator->fails()) {
-            http_response_code(400);
-            return http_response_code().': Did not pass validator, missing video_id, content or timestamp.';
+            return response()->json([
+                'message' => 'Did not pass validator.'
+            ], 400);
         } else {
             $videonote = Video_note::create($request->all());
-
             if(!empty($videonote->id)) {
-                http_response_code(200);
-                return http_response_code().": ID is missing.";
+                return response()->json([
+                    'message' => 'Successfully added video_note with id '.$videonote->id,
+                    'data' => $videonote
+                ], 201);
             } else {
-                http_response_code(400);
-                return http_response_code().': Failed uploading data in database.';
+                return response()->json([
+                    'message' => 'Failed uploading data in database.'
+                ], 500);
             }
         }
     }
@@ -61,8 +64,9 @@ class VideoNoteController extends Controller
         ]);
 
         if ($validator->fails()) {
-            http_response_code(400);
-            return http_response_code().': Did not pass validator.';
+            return response()->json([
+                'message' => 'Did not pass validator.'
+            ], 400);
         } else {
             $videonote = Video_note::find($videonote_id);
 
@@ -70,8 +74,10 @@ class VideoNoteController extends Controller
 
             $videonote->save();
 
-            http_response_code(200);
-            return http_response_code().': Updated row with id '.$videonote->id;
+            return response()->json([
+                'message' => 'Successfully updated video_note with id '.$videonote->id,
+                'data' => $videonote
+            ], 201);
         }
     }
 
@@ -83,19 +89,22 @@ class VideoNoteController extends Controller
      */
     public function deleteVideoNote($videonote_id) {
         if (intval($videonote_id) === 0) {
-            http_response_code(400);
-            return http_response_code() . ': Invalid argument; "' . $videonote_id . '" is not an integer';
+            return response()->json([
+                'message' => 'Invalid argument.'
+            ], 400);
         } else {
             $videonote = Video_note::find($videonote_id);
 
             if (!empty($videonote)) {
                 $videonote->delete();
-                http_response_code(200);
-                return http_response_code() . ': Succesfully removed video with id ' . $videonote->id;
+                return response()->json([
+                    'message' => 'Succesfully removed video_note with id ' . $videonote->id
+                ], 201);
             } else {
-                http_response_code(404);
-                return http_response_code() . ': Video with ID ' . $videonote_id . ' not found.';
-            };
+                return response()->json([
+                    'message' => 'Video_note with ID ' . $videonote_id . ' not found.'
+                ], 404);
+            }
         }
     }
 }
