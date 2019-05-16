@@ -29,14 +29,15 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('add-video', 'API\VideoController@addVideo');
     Route::patch('update-video/{id}', 'API\VideoController@updateVideo');
     Route::delete('delete-video/{id}', 'API\VideoController@deleteVideo');
+
+    Route::post('/get-all-video-notes', 'API\VideoNoteController@getAllVideoNotes');
+    Route::post('/create-video-note', 'API\VideoNoteController@createVideoNote');
+    Route::patch('/update-video-note/{id}', 'API\VideoNoteController@updateVideoNote');
+    Route::delete('/delete-video-note/{id}', 'API\VideoNoteController@deleteVideoNote');
 });
 
 
 
-Route::post('/get-all-video-notes', 'API\VideoNoteController@getAllVideoNotes');
-Route::post('/create-video-note', 'API\VideoNoteController@createVideoNote');
-Route::patch('/update-video-note/{id}', 'API\VideoNoteController@updateVideoNote');
-Route::delete('/delete-video-note/{id}', 'API\VideoNoteController@deleteVideoNote');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

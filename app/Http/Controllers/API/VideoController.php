@@ -37,17 +37,21 @@ class VideoController extends Controller
         ]);
 
         if($validator->fails()) {
-            http_response_code(400);
-            return http_response_code().': Did not pass validator.';
+            return response()->json([
+                'message' => 'Did not pass validator.'
+            ], 400);
         } else {
             $video = Video::create($request->all());
 
             if(!empty($video->id)) {
-                http_response_code(201);
-                return $video;
+                return response()->json([
+                    'message' => 'Successfully added video note with id '.$video->id,
+                    'data' => $video
+                ], 201);
             } else {
-                http_response_code(500);
-                return http_response_code().': failed uploading data in database.';
+                return response()->json([
+                    'message' => 'Failed uploading data in database.'
+                ], 500);
             }
         }
     }
@@ -69,13 +73,15 @@ class VideoController extends Controller
         ]);
 
         if($validator->fails()) {
-            http_response_code(400);
-            return http_response_code().': Did not pass validator.';
+            return response()->json([
+                'message' => 'Did not pass validator.'
+            ], 400);
         } else {
 
             if (intval($video_id) === 0) {
-                http_response_code(400);
-                return http_response_code() . ': invalid argument';
+                return response()->json([
+                    'message' => 'Invalid argument.'
+                ], 400);
             } else {
                 $video = Video::find($video_id);
 
@@ -85,8 +91,10 @@ class VideoController extends Controller
 
                 $video->save();
 
-                http_response_code(200);
-                return http_response_code().': updated row with id '.$video->id;
+                return response()->json([
+                    'message' => 'Successfully updated video with id '.$video->id,
+                    'data' => $video
+                ], 201);
             }
         }
     }
@@ -100,19 +108,22 @@ class VideoController extends Controller
      */
     public function deleteVideo($video_id) {
         if(intval($video_id) === 0) {
-            http_response_code(400);
-            return http_response_code().': invalid argument';
+            return response()->json([
+                'message' => 'Invalid argument.'
+            ], 400);
         } else {
             //check if record exists
             $video = Video::find($video_id);
 
             if(!empty($video)){
                 Video::find($video_id)->delete();
-                http_response_code(200);
-                return http_response_code().': Succesfully removed video with id '.$video->id;
+                return response()->json([
+                    'message' => 'Succesfully removed video with id ' . $video->id
+                ], 201);
             } else {
-                http_response_code(404);
-                return http_response_code().': Video not found';
+                return response()->json([
+                    'message' => 'Video with ID ' . $video_id . ' not found.'
+                ], 404);
             }
 
         }
