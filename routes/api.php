@@ -35,6 +35,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 Route::post('/get-all-video-notes', 'API\VideoNoteController@getAllVideoNotes');
 Route::post('/create-video-note', 'API\VideoNoteController@createVideoNote');
+Route::patch('/update-video-note/{id}', 'API\VideoNoteController@updateVideoNote');
+Route::delete('/delete-video-note/{id}', 'API\VideoNoteController@deleteVideoNote');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
