@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project_linked_tag extends Model
 {
     protected $table = 'projects_linked_tags';
+    public $timestamps = false;
 
     /** ----------------------------------------------------
      * Fillable
@@ -18,9 +19,7 @@ class Project_linked_tag extends Model
         'tag_id',
         'project_id',
     ];
-
-    public $timestamps = false;
-
+    
     /** ----------------------------------------------------
      * Project_linked_tag has many Projects
      *
