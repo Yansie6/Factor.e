@@ -12,7 +12,7 @@ class VideoNoteController extends Controller
 {
     /** ----------------------------------------------------
      * GetAllVideoNotes
-     * - Gets all videos from the videos table
+     * - Gets all videonotes from the videonotes table
      *
      * @param $videoId
      * @return String

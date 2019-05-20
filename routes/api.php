@@ -44,4 +44,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post(    'create-video-note',                    'API\VideoNoteController@createVideoNote');
     Route::patch(   'update-video-note/{videoNoteId}',      'API\VideoNoteController@updateVideoNote');
     Route::delete(  'delete-video-note/{videoNoteId}',      'API\VideoNoteController@deleteVideoNote');
+
+    Route::get(     'get-all-companies',                    'API\companyController@getAllCompanies');
+    Route::post(    'create-company',                       'API\companyController@createCompany');
+    Route::patch(   'update-company/{companyId}',           'API\companyController@updateCompany');
+    Route::delete(  'delete-company/{companyId}',           'API\companyController@deleteCompany');
 });
