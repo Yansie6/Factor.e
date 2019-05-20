@@ -113,7 +113,7 @@ class CompanyController extends Controller
 
     /** ----------------------------------------------------
      * deleteCompany
-     * - deletes project with the given id
+     * - deletes company with the given id
      *
      * @param $companyId
      * @return string
