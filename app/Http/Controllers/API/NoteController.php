@@ -21,7 +21,7 @@ class NoteController extends Controller
     public function getAllNotes($projectId = false) {
 
         if ($projectId) {
-            $notes = App\Note::where('project_id', $projectId)->get();
+            $notes = Note::where('project_id', $projectId)->get();
         } else {
             $notes = Note::all();
         }
@@ -36,15 +36,15 @@ class NoteController extends Controller
      * createNote
      * - Creates a note that is connected to a project
      *
-     * @param Request $request
+     * @param $request
      * @return string
      */
     public function createNote(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'project_id' => 'required|int',             //int
-            'title' => 'required|string|max:255',       //varchar
-            'content' => 'required|string',             //longtext
+            'project_id' => 'required|int',
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -70,15 +70,16 @@ class NoteController extends Controller
      * updateNote
      * - Updates note with the given id
      *
-     * @param Request $request
-     * @param $note_id
+     * @param $request
+     * @param $noteId
      * @return string
      */
-    public function updateNote(Request $request, $note_id) {
+    public function updateNote(Request $request, $noteId) {
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',       //varchar
-            'content' => 'required|string',             //longtext
+            'project_id' => 'required|int',
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -86,33 +87,45 @@ class NoteController extends Controller
                 'message' => 'Did not pass validator.'
             ], 400);
         } else {
-            $note = Note::find($note_id);
+            if (intval($noteId) === 0) {
+                return response()->json([
+                    'message' => 'Invalid argument.'
+                ], 400);
+            } else {
+                $note = Note::find($noteId);
 
-            $note->title = $request->get('title');
-            $note->content = $request->get('content');
+                if (!empty($note)) {
+                    $note->project_id = $request->get('project_id');
+                    $note->title = $request->get('title');
+                    $note->content = $request->get('content');
+                    $note->save();
 
-            $note->save();
-
-            return response()->json([
-                'message' => 'Successfully updated note with id '.$note->id,
-                'data' => $note
-            ], 201);
+                    return response()->json([
+                        'message' => 'Successfully updated note with id ' . $note->id,
+                        'data' => $note
+                    ], 201);
+                } else {
+                    return response()->json([
+                        'message' => 'Project with ID ' . $noteId . ' not found.'
+                    ], 404);
+                }
+            }
         }
     }
 
     /** ----------------------------------------------------
      * deleteNote
      *
-     * @param $note_id
+     * @param $noteId
      * @return string
      */
-    public function deleteNote($note_id) {
-        if (intval($note_id) === 0) {
+    public function deleteNote($noteId) {
+        if (intval($noteId) === 0) {
             return response()->json([
                 'message' => 'Invalid argument.'
             ], 400);
         } else {
-            $note = Note::find($note_id);
+            $note = Note::find($noteId);
 
             if (!empty($note)) {
                 $note->delete();
@@ -121,7 +134,7 @@ class NoteController extends Controller
                 ], 201);
             } else {
                 return response()->json([
-                    'message' => 'Note with ID ' . $note_id . ' not found.'
+                    'message' => 'Note with ID ' . $noteId . ' not found.'
                 ], 404);
             }
         }

@@ -16,9 +16,9 @@ class ProjectController extends Controller
      * @param $companyId
      * @return String
      */
-    public function getAllProjects($companyId = false) {
+    public function getAllProjects($companyId = null) {
 
-        if(!empty($companyId)){
+        if($companyId){
             $projects = Project::where('company_id', $companyId)->get();
         } else {
             $projects = Project::all();
@@ -31,13 +31,13 @@ class ProjectController extends Controller
     }
 
     /** ----------------------------------------------------
-     * addProject
+     * createProject
      * - Adds project to the projects table
      *
-     * @param Request $request
+     * @param $request
      * @return string
      */
-    public function addProject(Request $request) {
+    public function createProject(Request $request) {
 
         $validator = Validator::make($request->all(), [
             'company_id' => 'required|int',
@@ -53,7 +53,7 @@ class ProjectController extends Controller
 
             if(!empty($project->id)) {
                 return response()->json([
-                    'message' => 'Successfully added project note with id '.$project->id,
+                    'message' => 'Successfully created project note with id '.$project->id,
                     'data' => $project
                 ], 201);
             } else {
@@ -69,15 +69,14 @@ class ProjectController extends Controller
      * - updates project with the correct id in the projects table
      *
      * @param $request
-     * @param $project_id
+     * @param $projectId
      * @return string
      */
-    public function updateProject(Request $request, $project_id) {
+    public function updateProject(Request $request, $projectId) {
 
         $validator = Validator::make($request->all(), [
-            'project_id' => 'required|int',
+            'company_id' => 'required|int',
             'name' => 'required|string|max:255',
-            'link' => 'required|string|max:255'
         ]);
 
         if($validator->fails()) {
@@ -86,23 +85,29 @@ class ProjectController extends Controller
             ], 400);
         } else {
 
-            if (intval($project_id) === 0) {
+            if (intval($projectId) === 0) {
                 return response()->json([
                     'message' => 'Invalid argument.'
                 ], 400);
             } else {
-                $project = Project::find($project_id);
+                $project = Project::find($projectId);
 
-                $project->project_id = $request->get('project_id');
-                $project->name = $request->get('name');
-                $project->link = $request->get('link');
+                if(!empty($project)){
+                    $project->company_id = $request->get('company_id');
+                    $project->name = $request->get('name');
 
-                $project->save();
+                    $project->save();
 
-                return response()->json([
-                    'message' => 'Successfully updated project with id '.$project->id,
-                    'data' => $project
-                ], 201);
+
+                    return response()->json([
+                        'message' => 'Successfully updated project with id '.$project->id,
+                        'data' => $project
+                    ], 201);
+                } else {
+                    return response()->json([
+                        'message' => 'Project with ID ' . $projectId . ' not found.'
+                    ], 404);
+                }
             }
         }
     }
@@ -111,26 +116,26 @@ class ProjectController extends Controller
      * deleteProject
      * - deletes project with the given id
      *
-     * @param $project_id
+     * @param $projectId
      * @return string
      */
-    public function deleteProject($project_id) {
-        if(intval($project_id) === 0) {
+    public function deleteProject($projectId) {
+        if(intval($projectId) === 0) {
             return response()->json([
                 'message' => 'Invalid argument.'
             ], 400);
         } else {
             //check if record exists
-            $project = Project::find($project_id);
+            $project = Project::find($projectId);
 
             if(!empty($project)){
-                Project::find($project_id)->delete();
+                $project->delete();
                 return response()->json([
                     'message' => 'Succesfully removed project with id ' . $project->id
                 ], 201);
             } else {
                 return response()->json([
-                    'message' => 'Project with ID ' . $project_id . ' not found.'
+                    'message' => 'Project with ID ' . $projectId . ' not found.'
                 ], 404);
             }
 

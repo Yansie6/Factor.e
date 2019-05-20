@@ -7,23 +7,22 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App;
 use App\Video_note;
-use PHPUnit\Util\Json;
 
 class VideoNoteController extends Controller
 {
     /** ----------------------------------------------------
-     * GetAllVideosNotes
+     * GetAllVideoNotes
      * - Gets all videos from the videos table
      *
      * @param $videoId
      * @return String
      */
-    public function getAllVideosNotes($videoId = false) {
+    public function getAllVideoNotes($videoId = false) {
 
         if(!empty($videoId)){
-            $videoNotes = Video::where('video_id', $videoId)->get();
+            $videoNotes = Video_note::where('video_id', $videoId)->get();
         } else {
-            $videoNotes = Video::all();
+            $videoNotes = Video_note::all();
         }
 
         return response()->json([
@@ -36,15 +35,15 @@ class VideoNoteController extends Controller
      * createVideoNote
      * - Creates a note that is connected to a video
      *
-     * @param Request $request
+     * @param $request
      * @return string
      */
     public function createVideoNote(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'video_id' => 'required|int',               //int
-            'content' => 'required|string',             //longtext
-            'timestamp' => 'required|string|max:255',   //varchar
+            'video_id' => 'required|int',
+            'content' => 'required|string',
+            'timestamp' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -53,6 +52,7 @@ class VideoNoteController extends Controller
             ], 400);
         } else {
             $videonote = Video_note::create($request->all());
+
             if(!empty($videonote->id)) {
                 return response()->json([
                     'message' => 'Successfully added video_note with id '.$videonote->id,
@@ -70,14 +70,16 @@ class VideoNoteController extends Controller
      * updateVideoNote
      * - Updates videonote with the given id
      *
-     * @param Request $request
-     * @param $videonote_id
+     * @param $request
+     * @param $videoNoteId
      * @return string
      */
-    public function updateVideoNote(Request $request, $videonote_id) {
+    public function updateVideoNote(Request $request, $videoNoteId) {
 
         $validator = Validator::make($request->all(), [
-            'content' => 'required|string',             //longtext
+            'video_id' => 'required|int',
+            'content' => 'required|string',
+            'timestamp' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -85,32 +87,46 @@ class VideoNoteController extends Controller
                 'message' => 'Did not pass validator.'
             ], 400);
         } else {
-            $videonote = Video_note::find($videonote_id);
+            if (intval($videoNoteId) === 0) {
+                return response()->json([
+                    'message' => 'Invalid argument.'
+                ], 400);
+            } else {
 
-            $videonote->content = $request->get('content');
+                $videonote = Video_note::find($videoNoteId);
 
-            $videonote->save();
+                if(!empty($videonote)){
+                    $videonote->video_id = $request->get('video_id');
+                    $videonote->content = $request->get('content');
+                    $videonote->timestamp = $request->get('timestamp');
+                    $videonote->save();
 
-            return response()->json([
-                'message' => 'Successfully updated video_note with id '.$videonote->id,
-                'data' => $videonote
-            ], 201);
+                    return response()->json([
+                        'message' => 'Successfully updated video_note with id ' . $videonote->id,
+                        'data' => $videonote
+                    ], 201);
+                } else {
+                    return response()->json([
+                        'message' => 'Project with ID ' . $videoNoteId . ' not found.'
+                    ], 404);
+                }
+            }
         }
     }
 
     /** ----------------------------------------------------
      * deleteVideoNote
      *
-     * @param $videonote_id
+     * @param $videoNoteId
      * @return string
      */
-    public function deleteVideoNote($videonote_id) {
-        if (intval($videonote_id) === 0) {
+    public function deleteVideoNote($videoNoteId) {
+        if (intval($videoNoteId) === 0) {
             return response()->json([
                 'message' => 'Invalid argument.'
             ], 400);
         } else {
-            $videonote = Video_note::find($videonote_id);
+            $videonote = Video_note::find($videoNoteId);
 
             if (!empty($videonote)) {
                 $videonote->delete();
@@ -119,7 +135,7 @@ class VideoNoteController extends Controller
                 ], 201);
             } else {
                 return response()->json([
-                    'message' => 'Video_note with ID ' . $videonote_id . ' not found.'
+                    'message' => 'Video_note with ID ' . $videoNoteId . ' not found.'
                 ], 404);
             }
         }

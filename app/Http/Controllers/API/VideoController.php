@@ -31,13 +31,13 @@ class VideoController extends Controller
     }
 
     /** ----------------------------------------------------
-     * addVideo
+     * createVideo
      * - Adds video to the videos table
      *
-     * @param Request $request
+     * @param $request
      * @return string
      */
-    public function addVideo(Request $request) {
+    public function createVideo(Request $request) {
 
         $validator = Validator::make($request->all(), [
             'project_id' => 'required|int',
@@ -54,7 +54,7 @@ class VideoController extends Controller
 
             if(!empty($video->id)) {
                 return response()->json([
-                    'message' => 'Successfully added video note with id '.$video->id,
+                    'message' => 'Successfully created video note with id '.$video->id,
                     'data' => $video
                 ], 201);
             } else {
@@ -69,11 +69,11 @@ class VideoController extends Controller
      * UpdateVideo
      * - updates video with the correct id in the videos table
      *
-     * @param Request $request
-     * @param $video_id
+     * @param $request
+     * @param $videoId
      * @return string
      */
-    public function updateVideo(Request $request, $video_id) {
+    public function updateVideo(Request $request, $videoId) {
 
         $validator = Validator::make($request->all(), [
             'project_id' => 'required|int',
@@ -87,22 +87,29 @@ class VideoController extends Controller
             ], 400);
         } else {
 
-            if (intval($video_id) === 0) {
+            if (intval($videoId) === 0) {
                 return response()->json([
                     'message' => 'Invalid argument.'
                 ], 400);
             } else {
-                $video = Video::find($video_id);
 
-                $video->project_id = $request->get('company_id');
-                $video->name = $request->get('name');
+                $video = Video::find($videoId);
 
-                $video->save();
+                if(!empty($video)){
+                    $video->project_id = $request->get('project_id');
+                    $video->name = $request->get('name');
 
-                return response()->json([
-                    'message' => 'Successfully updated video with id '.$video->id,
-                    'data' => $video
-                ], 201);
+                    $video->save();
+
+                    return response()->json([
+                        'message' => 'Successfully updated video with id '.$video->id,
+                        'data' => $video
+                    ], 201);
+                } else {
+                    return response()->json([
+                        'message' => 'Video with ID ' . $videoId . ' not found.'
+                    ], 404);
+                }
             }
         }
     }
@@ -111,26 +118,26 @@ class VideoController extends Controller
      * deleteVideo
      * - deletes video with the given id
      *
-     * @param $video_id
+     * @param $videoId
      * @return string
      */
-    public function deleteVideo($video_id) {
-        if(intval($video_id) === 0) {
+    public function deleteVideo($videoId) {
+        if(intval($videoId) === 0) {
             return response()->json([
                 'message' => 'Invalid argument.'
             ], 400);
         } else {
             //check if record exists
-            $video = Video::find($video_id);
+            $video = Video::find($videoId);
 
             if(!empty($video)){
-                Video::find($video_id)->delete();
+                $video->delete();
                 return response()->json([
                     'message' => 'Succesfully removed video with id ' . $video->id
                 ], 201);
             } else {
                 return response()->json([
-                    'message' => 'Video with ID ' . $video_id . ' not found.'
+                    'message' => 'Video with ID ' . $videoId . ' not found.'
                 ], 404);
             }
 
