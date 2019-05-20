@@ -35,9 +35,13 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::patch(   'update-project/{id}',              'API\ProjectController@updateProject');
     Route::delete(  'delete-project/{id}',              'API\ProjectController@deleteProject');
 
+    Route::get(     'get-all-notes/{project-id?}',      'API\NoteController@getAllNotes');
+    Route::post(    'create-note',                      'API\NoteController@createNote');
+    Route::patch(   'update-note/{id}',                 'API\NoteController@updateNote');
+    Route::delete(  'delete-note/{id}',                 'API\NoteController@deleteNote');
 
-    Route::get(     '/get-all-video-notes/{video-id?}', 'API\VideoNoteController@getAllVideoNotes');
-    Route::post(    '/create-video-note',               'API\VideoNoteController@createVideoNote');
-    Route::patch(   '/update-video-note/{id}',          'API\VideoNoteController@updateVideoNote');
-    Route::delete(  '/delete-video-note/{id}',          'API\VideoNoteController@deleteVideoNote');
+    Route::get(     'get-all-video-notes/{video-id?}',  'API\VideoNoteController@getAllVideoNotes');
+    Route::post(    'create-video-note',                'API\VideoNoteController@createVideoNote');
+    Route::patch(   'update-video-note/{id}',           'API\VideoNoteController@updateVideoNote');
+    Route::delete(  'delete-video-note/{id}',           'API\VideoNoteController@deleteVideoNote');
 });
