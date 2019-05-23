@@ -21,13 +21,13 @@ class UsersTableSeeder extends Seeder
                 'company_id' => 0
             ],
             [
-                'firstname' => "Renze",
-                'lastname' => "Dijkstra",
-                'email' => "renze.d98@gmail.com",
+                'firstname' => "Voornaam",
+                'lastname' => "Achternaam",
+                'email' => "test@test.nl",
                 'password' => bcrypt('test123'),
                 'rank' => 1,
                 'company_id' => 0
-            ]
+            ],
         ]);
     }
 }

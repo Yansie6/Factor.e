@@ -127,7 +127,6 @@ class VideoController extends Controller
                 'message' => 'Invalid argument.'
             ], 400);
         } else {
-            //check if record exists
             $video = Video::find($videoId);
 
             if(!empty($video)){
