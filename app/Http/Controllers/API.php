@@ -207,71 +207,84 @@ class API extends Controller
     }
 
     /** ----------------------------------------------------
-     * checkIfValid
+     * _getTypeVariables
      *
+     * @param $type
+     * @return array
      */
-    private function _getTypeVariables($variable){
-
-        $returnArray = [];
-        $returnArray['valid'] = true;
-
-        switch ($variable) {
-            case 'video':
-                $returnArray['model'] = Video::class;
-                $returnArray['linkedTable'] = 'project_id';
-                $returnArray['fields'] = [
+    private function _getTypeVariables($type){
+        /**
+         * Persoonlijk vind ik dit het meest overzichtelijk omdat je niet in denkbeeldige arrays zit te werken.
+        **/
+        $array = [
+            'video' => [
+                'model' => Video::class,
+                'linkedTable' => 'project_id',
+                'fields' => [
                     'project_id' => 'required|int',
                     'name' => 'required|string|max:255',
                     'link' => 'required|string|max:255'
-                ];
-                break;
+                ],
+                //'valid' => true
+            ],
 
-            case 'project':
-                $returnArray['model'] = Project::class;
-                $returnArray['linkedTable'] = 'company_id';
-                $returnArray['fields'] = [
+            'project' => [
+                'model' => Project::class,
+                'linkedTable' => 'company_id',
+                'fields' => [
                     'company_id' => 'required|int',
                     'name' => 'required|string|max:255'
-                ];
-                break;
+                ],
+                //'valid' => true
+            ],
 
-            case 'note':
-                $returnArray['model'] = Note::class;
-                $returnArray['linkedTable'] = 'video';
-                $returnArray['fields'] = [
+            'note' => [
+                'model' => Note::class,
+                'linkedTable' => 'video',
+                'fields' => [
                     'project_id' => 'required|int',
                     'title' => 'required|string|max:255',
                     'content' => 'required|string'
-                ];
-                break;
+                ],
+                //'valid' => true
+            ],
 
-            case 'video-note':
-                $returnArray['model'] = Video_note::class;
-                $returnArray['linkedTable'] = 'video';
-                $returnArray['fields'] = [
+            'video-note' => [
+                'model' => Video_note::class,
+                'linkedTable' => 'video',
+                'fields' => [
                     'video_id' => 'required|int',
                     'content' => 'required|string',
                     'timestamp' => 'required|string'
-                ];
-                break;
+                ],
+                //'valid' => true
+            ],
 
-            case 'company':
-                $returnArray['model'] = Company::class;
-                $returnArray['linkedTable'] = '';
-                $returnArray['fields'] = [
+            'company' => [
+                'model' => Company::class,
+                'linkedTable' => '',
+                'fields' => [
                     'name' => 'required|string|max:255',
                     'address' => 'required|string|max:255',
                     'phone' => 'required|string|max:255',
                     'email' => 'required|string|max:255'
-                ];
-                break;
+                ],
+                //'valid' => true
+            ]
+        ];
 
-            default:
-                $returnArray['valid'] = false;
+        // deze voegt aan alle types valid = true toe
+        foreach ($array as $tableType) {
+            $tableType['valid'] = true;
+            // dit moet nog even getest worden
+        };
 
-        }
+        if (in_array($type, $array)) {
+            $returnArray = $array[$type];
+        } else {
+            $returnArray = ['valid' => false];
+        };
 
         return $returnArray;
-
     }
 }
