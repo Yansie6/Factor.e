@@ -91,14 +91,14 @@ class NoteControllerRefactor extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Did not pass validator.'
-            ], 400);
+            $message = 'Did not pass validator.';
+            $data = '';
+            $httpResponseCode = 400;
         } else {
             if (intval($noteId) === 0) {
-                return response()->json([
-                    'message' => 'Invalid argument.'
-                ], 400);
+                $message = 'Invalid argument.';
+                $data = '';
+                $httpResponseCode = 400;
             } else {
                 $note = Note::find($noteId);
 
@@ -108,17 +108,21 @@ class NoteControllerRefactor extends Controller
                     $note->content = $request->get('content');
                     $note->save();
 
-                    return response()->json([
-                        'message' => 'Successfully updated note with id ' . $note->id,
-                        'data' => $note
-                    ], 201);
+                    $message = 'Successfully updated note with id ' . $note->id;
+                    $data = '';
+                    $httpResponseCode = 201;
                 } else {
-                    return response()->json([
-                        'message' => 'Project with ID ' . $noteId . ' not found.'
-                    ], 404);
+                    $message = 'Project with ID ' . $noteId . ' not found.';
+                    $data = '';
+                    $httpResponseCode = 404;
                 }
             }
         }
+
+        return response()->json([
+            'message' => $message,
+            'data' => $data,
+        ], $httpResponseCode);
     }
 
     /** ----------------------------------------------------
@@ -129,22 +133,29 @@ class NoteControllerRefactor extends Controller
      */
     public function deleteNote($noteId) {
         if (intval($noteId) === 0) {
-            return response()->json([
-                'message' => 'Invalid argument.'
-            ], 400);
+            $message = 'Invalid argument.';
+            $data = '';
+            $httpResponseCode = 400;
         } else {
             $note = Note::find($noteId);
 
             if (!empty($note)) {
                 $note->delete();
-                return response()->json([
-                    'message' => 'Succesfully removed note with id ' . $note->id
-                ], 201);
+
+                $message = 'Succesfully removed note with id ' . $note->id;
+                $data = '';
+                $httpResponseCode = 201;
             } else {
-                return response()->json([
-                    'message' => 'Note with ID ' . $noteId . ' not found.'
-                ], 404);
+                $message = 'Note with ID ' . $noteId . ' not found.';
+                $data = '';
+                $httpResponseCode = 404;
             }
         }
+
+        return response()->json([
+            'message' => $message,
+            'data' => $data,
+        ], $httpResponseCode);
+
     }
 }
