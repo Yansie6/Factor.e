@@ -96,7 +96,7 @@ class NoteControllerRefactor extends Controller
                     $note->save();
 
                     $message = 'Successfully updated note with id ' . $note->id;
-                    $data = '';
+                    $data = $note;
                     $httpResponseCode = 201;
                 } else {
                     $message = 'Project with ID ' . $noteId . ' not found.';
