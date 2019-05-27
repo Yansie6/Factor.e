@@ -9,6 +9,10 @@ use App\Note;
 
 class NoteControllerRefactor extends Controller
 {
+
+    private $noteFields = ['project_id' => 'required|int', 'title' => 'required|string|max:255', 'content' => 'required|string'];
+
+
     /** ----------------------------------------------------
      * getAllNotes
      * - Gets all notes
@@ -18,8 +22,6 @@ class NoteControllerRefactor extends Controller
      * @return string
      */
     public function getAllNotes($projectId = false) {
-
-        return 'test';
 
         if ($projectId) {
             $notes = Note::where('project_id', $projectId)->get();
@@ -42,17 +44,9 @@ class NoteControllerRefactor extends Controller
      */
     public function createNote(Request $request) {
 
-        $validator = Validator::make($request->all(), [
-            'project_id' => 'required|int',
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-        ]);
+        $isValid = $this->checkIfValid($request->all(), $this->noteFields);
 
-        if ($validator->fails()) {
-            $message = 'Did not pass validator.';
-            $data = '';
-            $httpResponseCode = 400;
-        } else {
+        if ($isValid) {
             $note = Note::create($request->all());
             if(!empty($note->id)) {
                 $message = 'Successfully added note with id '.$note->id;
@@ -63,6 +57,10 @@ class NoteControllerRefactor extends Controller
                 $data = '';
                 $httpResponseCode = 500;
             }
+        } else {
+            $message = 'Did not pass validator.';
+            $data = '';
+            $httpResponseCode = 400;
         }
 
         return response()->json([
@@ -81,17 +79,9 @@ class NoteControllerRefactor extends Controller
      */
     public function updateNote(Request $request, $noteId) {
 
-        $validator = Validator::make($request->all(), [
-            'project_id' => 'required|int',
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-        ]);
+        $isValid = $this->checkIfValid($request->all(), $this->noteFields);
 
-        if ($validator->fails()) {
-            $message = 'Did not pass validator.';
-            $data = '';
-            $httpResponseCode = 400;
-        } else {
+        if ($isValid) {
             if (intval($noteId) === 0) {
                 $message = 'Invalid argument.';
                 $data = '';
@@ -114,6 +104,10 @@ class NoteControllerRefactor extends Controller
                     $httpResponseCode = 404;
                 }
             }
+        } else {
+            $message = 'Did not pass validator.';
+            $data = '';
+            $httpResponseCode = 400;
         }
 
         return response()->json([
@@ -154,5 +148,25 @@ class NoteControllerRefactor extends Controller
             'data' => $data,
         ], $httpResponseCode);
 
+    }
+
+    /** ----------------------------------------------------
+     * checkIfValid
+     *
+     * @param $data
+     * @param $fields
+     * @return bool
+     */
+    public function checkIfValid($data, $fields){
+
+        $validator = Validator::make($data, $fields);
+
+        if ($validator->fails()) {
+            $returnValue = false;
+        } else {
+            $returnValue = true;
+        }
+
+        return $returnValue;
     }
 }
