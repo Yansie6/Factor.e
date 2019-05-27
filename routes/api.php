@@ -40,6 +40,11 @@ Route::group(['prefix' => 'auth'], function () {
     Route::patch(   'update-note/{noteId}',                 'API\NoteController@updateNote');
     Route::delete(  'delete-note/{noteId}',                 'API\NoteController@deleteNote');
 
+        Route::get(     'get-all-notes-t/{projectId?}',           'API\NoteControllerRefactor@getAllNotes');
+        Route::post(    'create-note-t',                          'API\NoteControllerRefactor@createNote');
+        Route::patch(   'update-note-t/{noteId}',                 'API\NoteControllerRefactor@updateNote');
+        Route::delete(  'delete-note-t/{noteId}',                 'API\NoteControllerRefactor@deleteNote');
+
     Route::get(     'get-all-video-notes/{videoId?}',       'API\VideoNoteController@getAllVideoNotes');
     Route::post(    'create-video-note',                    'API\VideoNoteController@createVideoNote');
     Route::patch(   'update-video-note/{videoNoteId}',      'API\VideoNoteController@updateVideoNote');
