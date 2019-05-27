@@ -24,6 +24,7 @@ Route::group(['prefix' => 'auth'], function () {
     });
 });
 
+
     Route::get(     'get-all-videos/{projectId?}',          'API\VideoController@getAllVideos');
     Route::post(    'create-video',                         'API\VideoController@createVideo');
     Route::patch(   'update-video/{videoId}',               'API\VideoController@updateVideo');
@@ -48,6 +49,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post(    'create-company',                       'API\companyController@createCompany');
     Route::patch(   'update-company/{companyId}',           'API\companyController@updateCompany');
     Route::delete(  'delete-company/{companyId}',           'API\companyController@deleteCompany');
+
 Route::group(['middleware' => 'auth:api'], function() {
 
 });
