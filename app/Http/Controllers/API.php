@@ -25,7 +25,7 @@ class API extends Controller
         $typeVariables = $this->_getTypeVariables($type);
 
         if($typeVariables['valid']){
-            if ($linkedId) {
+            if ($linkedId && $type !== 'company') {
                 $items = $typeVariables['model']::where($typeVariables['linkedTable'], $linkedId)->get();
             } else {
                 $items = $typeVariables['model']::all();
@@ -187,7 +187,7 @@ class API extends Controller
     }
 
     /** ----------------------------------------------------
-     * checkIfValid
+     * _checkIfValid
      *
      * @param $data
      * @param $fields
@@ -207,15 +207,17 @@ class API extends Controller
     }
 
     /** ----------------------------------------------------
-     * checkIfValid
+     * _getTypeVariables
      *
+     * @param $type
+     * @return array
      */
-    private function _getTypeVariables($variable){
+    private function _getTypeVariables($type){
 
         $returnArray = [];
         $returnArray['valid'] = true;
 
-        switch ($variable) {
+        switch ($type) {
             case 'video':
                 $returnArray['model'] = Video::class;
                 $returnArray['linkedTable'] = 'project_id';
@@ -237,7 +239,7 @@ class API extends Controller
 
             case 'note':
                 $returnArray['model'] = Note::class;
-                $returnArray['linkedTable'] = 'video';
+                $returnArray['linkedTable'] = 'project_id';
                 $returnArray['fields'] = [
                     'project_id' => 'required|int',
                     'title' => 'required|string|max:255',
@@ -247,7 +249,7 @@ class API extends Controller
 
             case 'video-note':
                 $returnArray['model'] = Video_note::class;
-                $returnArray['linkedTable'] = 'video';
+                $returnArray['linkedTable'] = 'video_id';
                 $returnArray['fields'] = [
                     'video_id' => 'required|int',
                     'content' => 'required|string',
