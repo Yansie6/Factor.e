@@ -49,24 +49,21 @@ class NoteControllerRefactor extends Controller
         ]);
 
         if ($validator->fails()) {
-
-            return response()->json([
-                'message' => 'Did not pass validator.'
-            ], 400);
+            $message = 'Did not pass validator.';
+            $data = '';
+            $httpResponseCode = 400;
         } else {
             $note = Note::create($request->all());
             if(!empty($note->id)) {
-                return response()->json([
-                    'message' => 'Successfully added note with id '.$note->id,
-                    'data' => $note
-                ], 201);
+                $message = 'Successfully added note with id '.$note->id;
+                $data = $note;
+                $httpResponseCode = 201;
             } else {
-                return response()->json([
-                    'message' => 'Failed uploading data in database.'
-                ], 500);
+                $message = 'Failed uploading data in database.';
+                $data = '';
+                $httpResponseCode = 500;
             }
         }
-
 
         return response()->json([
             'message' => $message,
