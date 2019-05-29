@@ -1,8 +1,5 @@
 <?php
 
-use App\Company;
-use App\Video;
-use App\Video_note;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,25 +13,29 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            UsersTableSeeder::class,
-            VideosTableSeeder::class,
-            VideoNotesTableSeeder::class,
+            CompaniesTableSeeder::class,
             NotesTableSeeder::class,
             ProjectsTableSeeder::class,
-            TagsTableSeeder::class,
             ProjectTagsTableSeeder::class,
-            CompaniesTableSeeder::class,
+            ProjectUsersTableSeeder::class,
+            TagsTableSeeder::class,
+            UsersTableSeeder::class,
+            VideoNotesTableSeeder::class,
+            VideosTableSeeder::class,
+            VideoTagsTableSeeder::class,
         ]);
 
         $factor = 10;
 
-        factory(App\User::class, $factor)->create();
-        factory(App\Video::class, $factor)->create();
-        factory(App\Video_note::class, $factor * 5)->create();
+        factory(App\Company::class, $factor)->create();
         factory(App\Note::class, $factor)->create();
-        factory(App\Tag::class, $factor)->create();
         factory(App\Project::class, $factor)->create();
         factory(App\Project_linked_tag::class, $factor * 5)->create();
-        factory(App\Company::class, $factor)->create();
+        factory(App\Project_linked_user::class, $factor * 5)->create();
+        factory(App\Tag::class, $factor)->create();
+        factory(App\User::class, $factor)->create();
+        factory(App\Video_note::class, $factor * 5)->create();
+        factory(App\Video::class, $factor)->create();
+        factory(App\Video_linked_tag::class, $factor * 5)->create();
     }
 }
