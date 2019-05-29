@@ -17,6 +17,8 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->integer('company_id');
             $table->string('name');
+            $table->integer('status');
+            $table->integer('last_updated_by');
             $table->timestamps();
         });
     }

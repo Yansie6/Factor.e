@@ -19,6 +19,7 @@ class Video extends Model
     protected $fillable = [
         'project_id',
         'name',
+        'test_person',
         'link',
     ];
 

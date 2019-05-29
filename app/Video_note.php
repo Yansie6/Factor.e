@@ -15,6 +15,7 @@ class Video_note extends Model
     protected $fillable = [
         'video_id',
         'content',
+        'type',
         'timestamp',
     ];
 

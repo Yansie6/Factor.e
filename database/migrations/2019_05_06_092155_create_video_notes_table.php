@@ -17,6 +17,7 @@ class CreateVideoNotesTable extends Migration
             $table->increments('id');
             $table->integer('video_id');
             $table->text('content');
+            $table->integer('type');
             $table->string('timestamp');
             $table->timestamps();
         });

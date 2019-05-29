@@ -17,6 +17,7 @@ class CreateVideosTable extends Migration
             $table->increments('id');
             $table->integer('project_id');
             $table->string('name');
+            $table->string('test_person');
             $table->string('link');
             $table->timestamps();
         });

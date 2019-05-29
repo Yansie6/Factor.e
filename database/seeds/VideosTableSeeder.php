@@ -15,6 +15,7 @@ class VideosTableSeeder extends Seeder
             [
                 'project_id' => rand(1, 10),
                 'name' => "boekemantsjes.mp4",
+                'test_person' => "Renze Dijkstra",
                 'link' => "https://www.youtube.com/watch?v=gAjR4_CbPpQ",
                 'created_at' => now(),
                 'updated_at' => now(),
