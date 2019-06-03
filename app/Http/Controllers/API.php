@@ -25,7 +25,7 @@ class API extends Controller
         $typeVariables = $this->_getTypeVariables($type);
 
         if($typeVariables['valid']){
-            if ($linkedId) {
+            if ($linkedId && $type !== 'company') {
                 $items = $typeVariables['model']::where($typeVariables['linkedTable'], $linkedId)->get();
             } else {
                 $items = $typeVariables['model']::all();
@@ -187,7 +187,7 @@ class API extends Controller
     }
 
     /** ----------------------------------------------------
-     * checkIfValid
+     * _checkIfValid
      *
      * @param $data
      * @param $fields
@@ -213,78 +213,67 @@ class API extends Controller
      * @return array
      */
     private function _getTypeVariables($type){
-        /**
-         * Persoonlijk vind ik dit het meest overzichtelijk omdat je niet in denkbeeldige arrays zit te werken.
-        **/
-        $array = [
-            'video' => [
-                'model' => Video::class,
-                'linkedTable' => 'project_id',
-                'fields' => [
+
+        $returnArray = [];
+        $returnArray['valid'] = true;
+
+        switch ($type) {
+            case 'video':
+                $returnArray['model'] = Video::class;
+                $returnArray['linkedTable'] = 'project_id';
+                $returnArray['fields'] = [
                     'project_id' => 'required|int',
                     'name' => 'required|string|max:255',
                     'link' => 'required|string|max:255'
-                ],
-                //'valid' => true
-            ],
+                ];
+                break;
 
-            'project' => [
-                'model' => Project::class,
-                'linkedTable' => 'company_id',
-                'fields' => [
+            case 'project':
+                $returnArray['model'] = Project::class;
+                $returnArray['linkedTable'] = 'company_id';
+                $returnArray['fields'] = [
                     'company_id' => 'required|int',
                     'name' => 'required|string|max:255'
-                ],
-                //'valid' => true
-            ],
+                ];
+                break;
 
-            'note' => [
-                'model' => Note::class,
-                'linkedTable' => 'video',
-                'fields' => [
+            case 'note':
+                $returnArray['model'] = Note::class;
+                $returnArray['linkedTable'] = 'project_id';
+                $returnArray['fields'] = [
                     'project_id' => 'required|int',
                     'title' => 'required|string|max:255',
                     'content' => 'required|string'
-                ],
-                //'valid' => true
-            ],
+                ];
+                break;
 
-            'video-note' => [
-                'model' => Video_note::class,
-                'linkedTable' => 'video',
-                'fields' => [
+            case 'video-note':
+                $returnArray['model'] = Video_note::class;
+                $returnArray['linkedTable'] = 'video_id';
+                $returnArray['fields'] = [
                     'video_id' => 'required|int',
                     'content' => 'required|string',
                     'timestamp' => 'required|string'
-                ],
-                //'valid' => true
-            ],
+                ];
+                break;
 
-            'company' => [
-                'model' => Company::class,
-                'linkedTable' => '',
-                'fields' => [
+            case 'company':
+                $returnArray['model'] = Company::class;
+                $returnArray['linkedTable'] = '';
+                $returnArray['fields'] = [
                     'name' => 'required|string|max:255',
                     'address' => 'required|string|max:255',
                     'phone' => 'required|string|max:255',
                     'email' => 'required|string|max:255'
-                ],
-                //'valid' => true
-            ]
-        ];
+                ];
+                break;
 
-        // deze voegt aan alle types valid = true toe
-        foreach ($array as $tableType) {
-            $tableType['valid'] = true;
-            // dit moet nog even getest worden
-        };
+            default:
+                $returnArray['valid'] = false;
 
-        if (in_array($type, $array)) {
-            $returnArray = $array[$type];
-        } else {
-            $returnArray = ['valid' => false];
-        };
+        }
 
         return $returnArray;
+
     }
 }
