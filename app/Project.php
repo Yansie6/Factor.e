@@ -61,6 +61,16 @@ class Project extends Model
     }
 
     /** ----------------------------------------------------
+     * Many Project belong to many Users
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'projects_linked_users');
+    }
+
+    /** ----------------------------------------------------
      * GetQueueableRelations
      * - Get the relationships for the entity.
      *

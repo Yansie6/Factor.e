@@ -27,6 +27,16 @@ class Tag extends Model
     }
 
     /** ----------------------------------------------------
+     * Many Tags belong to many Videos
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function Videos()
+    {
+        return $this->belongsToMany(Video::class, 'videos_linked_tags');
+    }
+
+    /** ----------------------------------------------------
      * GetQueueableRelations
      * - Get the relationships for the entity.
      *

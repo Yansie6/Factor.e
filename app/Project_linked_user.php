@@ -16,8 +16,8 @@ class Project_linked_user extends Model
      * @var array
      */
     protected $fillable = [
-        'project_id',
         'user_id',
+        'project_id',
     ];
 
     /** ----------------------------------------------------
@@ -35,7 +35,7 @@ class Project_linked_user extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function tags()
+    public function users()
     {
         return $this->hasMany(User::class);
     }

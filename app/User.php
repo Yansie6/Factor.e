@@ -38,9 +38,19 @@ class User extends Authenticatable
      * User belongs to a Project
      *
      */
-    public function project()
+    /*public function Project()
     {
         return $this->belongsTo(User::class);
+    }*/
+
+    /** ----------------------------------------------------
+     * Many Users belong to many Projects
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function Projects()
+    {
+        return $this->belongsToMany(Video::class, 'projects_linked_users');
     }
 
     /** ----------------------------------------------------
