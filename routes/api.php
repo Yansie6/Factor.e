@@ -25,7 +25,7 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 
-    Route::get(     'get-all-videos/{projectId?}',          'API\VideoController@getAllVideos');
+/*    Route::get(     'get-all-videos/{projectId?}',          'API\VideoController@getAllVideos');
     Route::post(    'create-video',                         'API\VideoController@createVideo');
     Route::post(   'update-video/{videoId}',               'API\VideoController@updateVideo');
     Route::delete(  'delete-video/{videoId}',               'API\VideoController@deleteVideo');
@@ -53,11 +53,16 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get(     'get-all-notes-t/{projectId?}',           'API\NoteControllerRefactor@getAllNotes');
         Route::post(    'create-note-t',                          'API\NoteControllerRefactor@createNote');
         Route::post(   'update-note-t/{noteId}',                 'API\NoteControllerRefactor@updateNote');
-        Route::delete(  'delete-note-t/{noteId}',                 'API\NoteControllerRefactor@deleteNote');
+        Route::delete(  'delete-note-t/{noteId}',                 'API\NoteControllerRefactor@deleteNote');*/
 
-Route::group(['middleware' => 'auth:api'], function() {
+Route::get(     'get-all-tags/{type}/{id}',        'API\TagController@getAllTags');
+//Route::post(    'create-project',                       'API\TagController@createTag');
+//Route::post(    'update-project/{projectId}',           'API\TagController@updateProject'); nodig???
+//Route::delete(  'delete-project/{projectId}',           'API\TagController@deleteTag');
 
-});
+/*Route::group(['middleware' => 'auth:api'], function() {
+
+});*/
 
     Route::get(     'get/{type}/{linkedId?}',                   'API@get');
     Route::post(    'create/{type}',                            'API@create');
