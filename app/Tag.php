@@ -21,7 +21,7 @@ class Tag extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
-    public function Projects()
+    public function projects()
     {
         return $this->belongsToMany(Project::class, 'projects_linked_tags');
     }
@@ -31,9 +31,10 @@ class Tag extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
-    public function Videos()
+    public function videos()
     {
         return $this->belongsToMany(Video::class, 'videos_linked_tags');
+        //return $this->belongsToMany(Video::class);
     }
 
     /** ----------------------------------------------------

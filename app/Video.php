@@ -43,6 +43,15 @@ class Video extends Model
     }
 
     /** ----------------------------------------------------
+     * Video has many tags
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
+
+    /** ----------------------------------------------------
      * GetQueueableRelations
      * - Get the relationships for the entity.
      *

@@ -56,8 +56,8 @@ Route::group(['prefix' => 'auth'], function () {
         Route::delete(  'delete-note-t/{noteId}',                 'API\NoteControllerRefactor@deleteNote');*/
 
 Route::get(     'get-all-tags/{type}/{id}',        'API\TagController@getAllTags');
-//Route::post(    'create-project',                       'API\TagController@createTag');
-//Route::post(    'update-project/{projectId}',           'API\TagController@updateProject'); nodig???
+Route::post(    'create-tag/{type}/{id}',          'API\TagController@createTag');
+//Route::post(    'update-project/{projectId}',           'API\TagController@updateProject'); NODIG???
 //Route::delete(  'delete-project/{projectId}',           'API\TagController@deleteTag');
 
 /*Route::group(['middleware' => 'auth:api'], function() {
@@ -66,5 +66,5 @@ Route::get(     'get-all-tags/{type}/{id}',        'API\TagController@getAllTags
 
     Route::get(     'get/{type}/{linkedId?}',                   'API@get');
     Route::post(    'create/{type}',                            'API@create');
-    Route::post(   'update/{type}/{id}',                       'API@update');
+    Route::post(    'update/{type}/{id}',                       'API@update');
     Route::delete(  'delete/{type}/{id}',                       'API@delete');

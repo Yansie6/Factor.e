@@ -2,19 +2,32 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Video;
 use App\Video_linked_tag;
+use App\Project;
 use App\Project_linked_tag;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Tag;
 
 class TagController extends Controller
 {
-    private $noteFields = [
-        'id' => 'required|int',
+    private $tagFields = [
         'tag' => 'string|max:255',
     ];
+
+    /*private $videoTagFields = [
+        'tag_id' => 'int',
+        'video_id' => 'int',
+    ];
+
+    private $projectTagFields = [
+        'tag_id' => 'int',
+        'project_id' => 'int',
+    ];*/
 
     /** ----------------------------------------------------
      * getAllTags
@@ -31,10 +44,6 @@ class TagController extends Controller
 
             switch ($type) {
                 case 'video':
-                    /*$tagIds = Video_linked_tag::where('project_id', $id)->get();
-                    foreach ($tagIds as $tagId) {
-                        $tags = Tag::where('id', $tagId);
-                    }*/
                     $data = Tag::select('id', 'tag', 'created_at', 'updated_at')->where('video_id', $id)->join('videos_linked_tags', 'tags.id', '=', 'videos_linked_tags.tag_id')->get();
                     break;
 
@@ -43,12 +52,12 @@ class TagController extends Controller
                     break;
 
                 default:
-                    $message = 'Invalid argument';
+                    $message = 'Invalid argument.';
                     $data = '';
                     $httpResponseCode = 400;
             }
         } else {
-            $message = 'Invalid argument';
+            $message = 'Invalid argument.';
             $data = '';
             $httpResponseCode = 400;
         }
@@ -57,7 +66,6 @@ class TagController extends Controller
             'message' => $message,
             'data' => $data,
         ], $httpResponseCode);
-
     }
 
     /** ----------------------------------------------------
@@ -65,22 +73,83 @@ class TagController extends Controller
      * - Creates a tag that is connected to a project or video
      *
      * @param $request
+     * @param $type
+     * @param $id
      * @return string
      */
-    public function createNote(Request $request, $type, $id) {
+    public function createTag(Request $request, $type, $id) {
 
-        $isValid = $this->checkIfValid($request->all(), $this->noteFields);
+        $tagFieldsIsValid = $this->checkIfValid($request->all(), $this->tagFields);
 
-        /*if ($isValid) {
-            $note = Note::create($request->all());
-            if(!empty($note->id)) {
-                $message = 'Successfully added note with id '.$note->id;
-                $data = $note;
-                $httpResponseCode = 201;
+        if ($tagFieldsIsValid) {
+            if (is_numeric($id)) {
+                $types = ['video', 'project'];
+
+                if (in_array($type, $types)) {
+                    $tagName = $request->input('tag');
+                    $tag = Tag::firstOrCreate(['tag' => $tagName]);
+
+                    switch ($type) {
+                        case $types[0]:
+                            $video = Video::where('id', '=', $id)->exists();
+
+                            if ($video) {
+                                $exists = $tag->videos->contains($id);
+                                if ($exists) {
+                                    $message = 'Connection with video id ' . $id . ' already exists.';
+                                    $data = '';
+                                    $httpResponseCode = 409;
+                                } else {
+                                    $tag->videos()->attach($id);
+
+                                    $message = 'Successfully connected tag (id ' . $tag->id . ') to video (id ' . $id . ').';
+                                    $data = $tag;
+                                    $httpResponseCode = 201;
+                                }
+                            } else {
+                                $message = 'Video with id ' . $id . ' does not exist.';
+                                $data = '';
+                                $httpResponseCode = 400;
+                            }
+                            break;
+
+                        case $types[1]:
+                            $project = Project::where('id', '=', $id)->exists();
+
+                            if ($project) {
+                                $exists = $tag->projects->contains($id);
+                                if ($exists) {
+                                    $message = 'Connection with project id ' . $id . ' already exists.';
+                                    $data = '';
+                                    $httpResponseCode = 409;
+                                } else {
+                                    $tag->projects()->attach($id);
+
+                                    $message = 'Successfully connected tag (id ' . $tag->id . ') to project (id ' . $id . ').';
+                                    $data = $tag;
+                                    $httpResponseCode = 201;
+                                }
+                            } else {
+                                $message = 'Project with id ' . $id . ' does not exist.';
+                                $data = '';
+                                $httpResponseCode = 400;
+                            }
+                            break;
+                        default:
+                            $message = 'Something went wrong checking the type.';
+                            $data = '';
+                            $httpResponseCode = 400;
+                            break;
+                    }
+                } else {
+                    $message = 'Invalid argument "type".';
+                    $data = '';
+                    $httpResponseCode = 400;
+                }
             } else {
-                $message = 'Failed uploading data in database.';
+                $message = 'Invalid argument "id".';
                 $data = '';
-                $httpResponseCode = 500;
+                $httpResponseCode = 400;
             }
         } else {
             $message = 'Did not pass validator.';
@@ -91,7 +160,7 @@ class TagController extends Controller
         return response()->json([
             'message' => $message,
             'data' => $data
-        ], $httpResponseCode);*/
+        ], $httpResponseCode);
 
     }
 
@@ -103,7 +172,7 @@ class TagController extends Controller
      * @param $noteId
      * @return string
      */
-    public function updateNote(Request $request, $noteId) {
+    public function updateTag(Request $request, $noteId) {
 
         /*$isValid = $this->checkIfValid($request->all(), $this->noteFields);
 
@@ -148,7 +217,7 @@ class TagController extends Controller
      * @param $noteId
      * @return string
      */
-    public function deleteNote($noteId) {
+    public function deleteTag($noteId) {
         /*if (intval($noteId) === 0) {
             $message = 'Invalid argument.';
             $data = '';
