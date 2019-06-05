@@ -24,42 +24,46 @@ Route::group(['prefix' => 'auth'], function () {
     });
 });
 
-
-    Route::get(     'get-all-videos/{projectId?}',          'API\VideoController@getAllVideos');
-    Route::post(    'create-video',                         'API\VideoController@createVideo');
-    Route::post(   'update-video/{videoId}',               'API\VideoController@updateVideo');
-    Route::delete(  'delete-video/{videoId}',               'API\VideoController@deleteVideo');
-
-    Route::get(     'get-all-projects/{companyId?}',        'API\ProjectController@getAllProjects');
-    Route::post(    'create-project',                       'API\ProjectController@createProject');
-    Route::post(   'update-project/{projectId}',           'API\ProjectController@updateProject');
-    Route::delete(  'delete-project/{projectId}',           'API\ProjectController@deleteProject');
-
-    Route::get(     'get-all-notes/{projectId?}',           'API\NoteController@getAllNotes');
-    Route::post(    'create-note',                          'API\NoteController@createNote');
-    Route::post(   'update-note/{noteId}',                 'API\NoteController@updateNote');
-    Route::delete(  'delete-note/{noteId}',                 'API\NoteController@deleteNote');
-
-    Route::get(     'get-all-video-notes/{videoId?}',       'API\VideoNoteController@getAllVideoNotes');
-    Route::post(    'create-video-note',                    'API\VideoNoteController@createVideoNote');
-    Route::post(   'update-video-note/{videoNoteId}',      'API\VideoNoteController@updateVideoNote');
-    Route::delete(  'delete-video-note/{videoNoteId}',      'API\VideoNoteController@deleteVideoNote');
-
-    Route::get(     'get-all-companies',                    'API\companyController@getAllCompanies');
-    Route::post(    'create-company',                       'API\companyController@createCompany');
-    Route::post(   'update-company/{companyId}',           'API\companyController@updateCompany');
-    Route::delete(  'delete-company/{companyId}',           'API\companyController@deleteCompany');
-
-        Route::get(     'get-all-notes-t/{projectId?}',           'API\NoteControllerRefactor@getAllNotes');
-        Route::post(    'create-note-t',                          'API\NoteControllerRefactor@createNote');
-        Route::post(   'update-note-t/{noteId}',                 'API\NoteControllerRefactor@updateNote');
-        Route::delete(  'delete-note-t/{noteId}',                 'API\NoteControllerRefactor@deleteNote');
-
 Route::group(['middleware' => 'auth:api'], function() {
 
 });
 
-    Route::get(     'get/{type}/{linkedId?}',                   'API@get');
-    Route::post(    'create/{type}',                            'API@create');
-    Route::post(   'update/{type}/{id}',                       'API@update');
-    Route::delete(  'delete/{type}/{id}',                       'API@delete');
+Route::get(     'get/{type}/{linkedId?}',                   'API@get');
+Route::post(    'create/{type}',                            'API@create');
+Route::post(    'update/{type}/{id}',                       'API@update');
+Route::delete(  'delete/{type}/{id}',                       'API@delete');
+
+
+
+// Old routes
+    Route::get(     'get-all-videos/{projectId?}',          'API\VideoController@getAllVideos');
+    Route::post(    'create-video',                         'API\VideoController@createVideo');
+    Route::post(    'update-video/{videoId}',               'API\VideoController@updateVideo');
+    Route::delete(  'delete-video/{videoId}',               'API\VideoController@deleteVideo');
+
+    Route::get(     'get-all-projects/{companyId?}',        'API\ProjectController@getAllProjects');
+    Route::post(    'create-project',                       'API\ProjectController@createProject');
+    Route::post(    'update-project/{projectId}',           'API\ProjectController@updateProject');
+    Route::delete(  'delete-project/{projectId}',           'API\ProjectController@deleteProject');
+
+    Route::get(     'get-all-notes/{projectId?}',           'API\NoteController@getAllNotes');
+    Route::post(    'create-note',                          'API\NoteController@createNote');
+    Route::post(    'update-note/{noteId}',                 'API\NoteController@updateNote');
+    Route::delete(  'delete-note/{noteId}',                 'API\NoteController@deleteNote');
+
+    Route::get(     'get-all-video-notes/{videoId?}',       'API\VideoNoteController@getAllVideoNotes');
+    Route::post(    'create-video-note',                    'API\VideoNoteController@createVideoNote');
+    Route::post(    'update-video-note/{videoNoteId}',      'API\VideoNoteController@updateVideoNote');
+    Route::delete(  'delete-video-note/{videoNoteId}',      'API\VideoNoteController@deleteVideoNote');
+
+    Route::get(     'get-all-companies',                    'API\companyController@getAllCompanies');
+    Route::post(    'create-company',                       'API\companyController@createCompany');
+    Route::post(    'update-company/{companyId}',           'API\companyController@updateCompany');
+    Route::delete(  'delete-company/{companyId}',           'API\companyController@deleteCompany');
+
+
+    //updated old route (every function only contains one return)
+    Route::get(     'get-all-notes-t/{projectId?}',           'API\NoteControllerRefactor@getAllNotes');
+    Route::post(    'create-note-t',                          'API\NoteControllerRefactor@createNote');
+    Route::post(    'update-note-t/{noteId}',                 'API\NoteControllerRefactor@updateNote');
+    Route::delete(  'delete-note-t/{noteId}',                 'API\NoteControllerRefactor@deleteNote');

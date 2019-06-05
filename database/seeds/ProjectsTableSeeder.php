@@ -14,7 +14,7 @@ class ProjectsTableSeeder extends Seeder
         DB::table('projects')->insert([
             [
                 'company_id' => 1,
-                'name' => "Factor Yeet",
+                'name' => "theFactor.e Project",
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
