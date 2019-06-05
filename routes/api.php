@@ -55,10 +55,10 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post(   'update-note-t/{noteId}',                 'API\NoteControllerRefactor@updateNote');
         Route::delete(  'delete-note-t/{noteId}',                 'API\NoteControllerRefactor@deleteNote');*/
 
-Route::get(     'get-all-tags/{type}/{id}',        'API\TagController@getAllTags');
-Route::post(    'create-tag/{type}/{id}',          'API\TagController@createTag');
-//Route::post(    'update-project/{projectId}',           'API\TagController@updateProject'); NODIG???
-//Route::delete(  'delete-project/{projectId}',           'API\TagController@deleteTag');
+Route::get(     'get-all-tags/{type}/{typeId}',             'API\TagController@getAllTags');
+Route::post(    'create-tag/{type}/{typeId}/',              'API\TagController@createTag');
+//Route::post(    'update-tag/{type}/{id}',               'API\TagController@updateProject'); NIET NODIG
+Route::delete(  'delete-tag/{type}/{typeId}/{tagId}',       'API\TagController@deleteTag');
 
 /*Route::group(['middleware' => 'auth:api'], function() {
 
