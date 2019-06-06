@@ -166,7 +166,7 @@ class API extends Controller
 
                     $message = 'Succesfully removed '.$type.' with id ' . $id;
                     $data = '';
-                    $httpResponseCode = 201;
+                    $httpResponseCode = 200;
                 } else {
                     $message = $type.' with ID ' . $id . ' not found.';
                     $data = '';
