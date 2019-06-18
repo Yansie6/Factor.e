@@ -224,7 +224,8 @@ class API extends Controller
                 $returnArray['fields'] = [
                     'project_id' => 'required|int',
                     'name' => 'required|string|max:255',
-                    'link' => 'required|string|max:255'
+                    'link' => 'required|string|max:255',
+                    'test_person' => 'required|string|max:255'
                 ];
                 break;
 
@@ -233,7 +234,9 @@ class API extends Controller
                 $returnArray['linkedTable'] = 'company_id';
                 $returnArray['fields'] = [
                     'company_id' => 'required|int',
-                    'name' => 'required|string|max:255'
+                    'name' => 'required|string|max:255',
+                    'status' => 'required|int|max:11',
+                    'last_updated_by' => 'required|int|max:11'
                 ];
                 break;
 
@@ -253,7 +256,8 @@ class API extends Controller
                 $returnArray['fields'] = [
                     'video_id' => 'required|int',
                     'content' => 'required|string',
-                    'timestamp' => 'required|string'
+                    'timestamp' => 'required',
+                    'type' => 'required|int'
                 ];
                 break;
 
@@ -264,7 +268,8 @@ class API extends Controller
                     'name' => 'required|string|max:255',
                     'address' => 'required|string|max:255',
                     'phone' => 'required|string|max:255',
-                    'email' => 'required|string|max:255'
+                    'email' => 'required|string|max:255',
+                    'image' => 'required|string|max:255'
                 ];
                 break;
 
