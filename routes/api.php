@@ -24,6 +24,7 @@ Route::group(['prefix' => 'auth'], function () {
     });
 });
 
+
 Route::group(['middleware' => 'auth:api'], function() {
     //This is the middleware, not needed now for testing purposes
 });
@@ -33,6 +34,7 @@ Route::post(    'create/{type}',                            'API@create');
 Route::post(    'update/{type}/{id}',                       'API@update');
 Route::delete(  'delete/{type}/{id}',                       'API@delete');
 
+Route::get(     'get-version',                              'API@getVersion');
 
 Route::get(     'get-all-tags/{type}/{typeId}',             'API\TagController@getAllTags');
 Route::post(    'create-tag/{type}/{typeId}/',              'API\TagController@createTag');
