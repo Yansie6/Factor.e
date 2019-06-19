@@ -276,4 +276,28 @@ class API extends Controller
         return $returnArray;
 
     }
+
+    /** ----------------------------------------------------
+     * getVersion
+     *
+     * @return string
+     */
+    public function getVersion() {
+        $version = env('VERSION', false);
+
+        if ($version) {
+            $message = 'Success.';
+            $data = $version;
+            $httpResponseCode = 200;
+        } else {
+            $message = 'Someting went wrong.';
+            $data = '';
+            $httpResponseCode = 400;
+        }
+
+        return response()->json([
+            'message' => $message,
+            'data' => $data
+        ], $httpResponseCode);
+    }
 }
