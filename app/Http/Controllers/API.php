@@ -266,10 +266,10 @@ class API extends Controller
                 $returnArray['linkedTable'] = '';
                 $returnArray['fields'] = [
                     'name' => 'required|string|max:255',
-                    'address' => 'required|string|max:255',
-                    'phone' => 'required|string|max:255',
-                    'email' => 'required|string|max:255',
-                    'image' => 'required|string|max:255'
+                    'address' => 'string|max:255',
+                    'phone' => 'string|max:255',
+                    'email' => 'string|max:255',
+                    'image' => 'string'
                 ];
                 break;
 
